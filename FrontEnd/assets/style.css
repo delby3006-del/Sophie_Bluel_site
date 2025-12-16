@@ -207,6 +207,31 @@ li:hover {
   text-align: center;
   margin-bottom: 1em;
 }
+
+.filtres {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filtres button {
+  font-family: "Syne";
+  font-weight: 700;
+  font-size: 16px;
+  color: #1d6154;
+  background-color: white;
+  border: 2px solid #1d6154;
+  border-radius: 25px;
+  margin: 0 10px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.filtres button:hover {
+  background-color: #1d6154;
+  color: white;
+}
+
 .gallery {
   width: 100%;
   display: grid;
