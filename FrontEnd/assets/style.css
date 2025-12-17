@@ -152,12 +152,6 @@ h1 {
   color: #b1663c;
 }
 
-h1 > span {
-  font-family: "Work Sans";
-  font-size: 10px;
-  letter-spacing: 0.1em;
-}
-
 h2 {
   font-family: "Syne";
   font-weight: 700;
@@ -289,4 +283,24 @@ footer nav ul {
   display: flex;
   justify-content: flex-end;
   margin: 2em;
+}
+
+/** css page de connexion**/
+
+h1.connection {
+  font-family: "Syne";
+  font-size: 30px;
+  font-weight: 700;
+  color: #1d6154;
+  position: sticky;
+  top: 250px;
+  left: 670px;
+  margin: 50px 0;
+  text-align: center;
+}
+
+.formulaire {
+  font-family: "Work Sans";
+  font-size: 14px;
+  font-weight: 500;
 }

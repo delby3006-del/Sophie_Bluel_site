@@ -49,6 +49,7 @@ async function fetchtries() {
   // Bouton "Tous"
   const filterTous = document.createElement("button");
   filterTous.innerText = "Tous";
+  filterTous.classList.add("choixGallery");
   filterTous.addEventListener("click", function () {
     filtrerParCategorie("tous");
     supprimeClass();
@@ -65,7 +66,7 @@ async function fetchtries() {
 
     boutonElement.addEventListener("click", function () {
       console.log(categorie.id);
-      // filtrerParCategorie(categorie.id);
+      filtrerParCategorie(categorie.id);
       supprimeClass();
       boutonElement.classList.add("choixGallery");
     });
