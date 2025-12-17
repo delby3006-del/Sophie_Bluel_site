@@ -227,7 +227,7 @@ li:hover {
   cursor: pointer;
 }
 
-.filtres button:hover {
+button.choixGallery {
   background-color: #1d6154;
   color: white;
 }

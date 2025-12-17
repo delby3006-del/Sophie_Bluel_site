@@ -51,6 +51,8 @@ async function fetchtries() {
   filterTous.innerText = "Tous";
   filterTous.addEventListener("click", function () {
     filtrerParCategorie("tous");
+    supprimeClass();
+    filterTous.classList.add("choixGallery");
   });
   const filtreBouton = document.querySelector(".filtres");
   filtreBouton.appendChild(filterTous);
@@ -63,11 +65,23 @@ async function fetchtries() {
 
     boutonElement.addEventListener("click", function () {
       console.log(categorie.id);
-      filtrerParCategorie(categorie.id);
+      // filtrerParCategorie(categorie.id);
+      supprimeClass();
+      boutonElement.classList.add("choixGallery");
     });
 
     filtreBouton.appendChild(boutonElement);
   }
+  // ajouterClass();
+}
+
+// const classButton = document.querySelector("button");
+
+function supprimeClass() {
+  const classButtons = document.querySelectorAll("button");
+  classButtons.forEach((button) => {
+    button.classList.remove("choixGallery");
+  });
 }
 
 // Exécuter les fonctions
