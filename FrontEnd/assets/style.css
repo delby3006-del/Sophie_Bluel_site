@@ -144,11 +144,18 @@ section {
 }
 
 h1 {
+  font-family: "Syne";
+  font-weight: 800;
+  font-size: 36px;
+  color: #b1663c;
+}
+
+h1 span {
   display: flex;
   flex-direction: column;
   font-family: "Syne";
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 300;
   color: #b1663c;
 }
 
@@ -268,7 +275,7 @@ button.choixGallery {
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"] {
+input[type="submit"].envoi-message {
   font-family: "Syne";
   font-weight: 700;
   color: white;
@@ -287,20 +294,56 @@ footer nav ul {
 
 /** css page de connexion**/
 
-h1.connection {
+.connection-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 950px;
+}
+
+.connection-section .formulaire {
+  padding-top: 50px;
+  font-family: "Work Sans";
+  font-size: 14px;
+  font-weight: 500;
+  width: 35%;
+  margin: 2em auto;
+  margin-top: 5em;
+}
+
+.connection {
   font-family: "Syne";
   font-size: 30px;
   font-weight: 700;
   color: #1d6154;
   position: sticky;
   top: 250px;
-  left: 670px;
-  margin: 50px 0;
+  width: 100%;
   text-align: center;
 }
 
-.formulaire {
-  font-family: "Work Sans";
-  font-size: 14px;
-  font-weight: 500;
+.connection-section .formulaire label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.connection-section .information-connection {
+  height: 50px;
+  width: 100%;
+  margin-bottom: 20px;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+.connection-section .connection-button {
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  margin-top: 2em;
+  margin-left: 25%;
+  width: 50%;
+  border-radius: 60px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
 }
