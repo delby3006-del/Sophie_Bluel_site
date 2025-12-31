@@ -82,24 +82,6 @@ function supprimeClass() {
   });
 }
 
-async function connectionHomepage() {
-  const token = await fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: document.getElementById("email").value,
-      password: document.getElementById("password").value,
-    }),
-  }).then((response) => response.json());
-  const loginLink = document.querySelector(".connection-button");
-  loginLink.href = "./connexion.html";
-  loginLink.textContent = "logout";
-  console.log("LoginLink");
-}
-
 // Exécuter les fonctions
 fetchWorks();
 fetchtries();
-connectionHomepage();
