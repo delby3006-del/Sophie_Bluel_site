@@ -1,8 +1,6 @@
-async function connectionHomepage(event) {
-  event.preventDefault(); // Empêche le rechargement du formulaire
-
+async function connectionHomepage() {
   const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+  const password = document.getElementById("mdp").value;
 
   try {
     const response = await fetch("http://localhost:5678/api/users/login", {
@@ -31,3 +29,9 @@ async function connectionHomepage(event) {
     alert("Impossible de contacter le serveur.");
   }
 }
+
+// Exécuter les fonctions
+document.getElementById("formulaire").addEventListener("submit", (e) => {
+  e.preventDefault();
+  connectionHomepage();
+});
