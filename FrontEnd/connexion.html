@@ -16,56 +16,60 @@
     <!-- <script src="./scripts/main.js" defer></script> -->
   </head>
   <body>
-    <header>
-      <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-      <nav>
-        <ul>
-          <li>projets</li>
-          <li>contact</li>
-          <li class="localisation"><a href="./index.html">login</a></li>
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <section class="connection-section">
-        <h3 class="connection">Log in</h3>
-        <div class="formulaire">
-          <form id="formulaire" action="#" method="post">
-            <label for="email">E-mail</label><br />
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="information-connection"
-              required
-            /><br />
-            <label for="mdp">Mot de passe</label><br />
-            <input
-              type="password"
-              id="mdp"
-              name="mdp"
-              class="information-connection"
-              required
-            /><br />
-            <input
-              type="submit"
-              value="Se connecter"
-              class="connection-button"
-            />
-            <p class="mot-de-passe-oublie">
-              <a class="mot-de-passe-oublie" href="#">Mot de passe oublié ?</a>
-            </p>
-          </form>
-        </div>
-      </section>
-    </main>
-    <footer>
-      <nav>
-        <ul>
-          <li>Mentions Légales</li>
-        </ul>
-      </nav>
-    </footer>
+    <div id="container">
+      <header>
+        <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+        <nav>
+          <ul>
+            <li>projets</li>
+            <li>contact</li>
+            <li class="localisation"><a href="./index.html">login</a></li>
+            <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <section class="connection-section">
+          <h3 class="connection">Log in</h3>
+          <div class="formulaire">
+            <form id="formulaire" action="#" method="post">
+              <label for="email">E-mail</label><br />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="information-connection"
+                required
+              /><br />
+              <label for="mdp">Mot de passe</label><br />
+              <input
+                type="password"
+                id="mdp"
+                name="mdp"
+                class="information-connection"
+                required
+              /><br />
+              <input
+                type="submit"
+                value="Se connecter"
+                class="connection-button"
+              />
+              <p class="mot-de-passe-oublie">
+                <a class="mot-de-passe-oublie" href="#"
+                  >Mot de passe oublié ?</a
+                >
+              </p>
+            </form>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <nav>
+          <ul>
+            <li>Mentions Légales</li>
+          </ul>
+        </nav>
+      </footer>
+    </div>
   </body>
 </html>

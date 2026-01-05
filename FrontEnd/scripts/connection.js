@@ -11,7 +11,7 @@ async function connectionHomepage() {
 
     // Si identifiants faux → OC attend souvent 401
     if (!response.ok) {
-      // Affiche un message d’erreur (à adapter à ton HTML)
+      // Affiche un message d’erreur
       console.log("Login échoué :", response.status);
       alert("Erreur dans l’identifiant ou le mot de passe");
       return;
@@ -19,7 +19,7 @@ async function connectionHomepage() {
 
     const data = await response.json(); // { token: "..." }
 
-    // Stocker le token pour être reconnue ensuite
+    // Stocker le token reconnue ensuite
     localStorage.setItem("token", data.token);
 
     // Rediriger vers la page d’accueil (index)

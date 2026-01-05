@@ -128,7 +128,13 @@ table {
   border-spacing: 0;
 }
 /** end reset css**/
-body {
+/* body {
+  max-width: 1140px;
+  margin: auto;
+  font-family: "Work Sans";
+  font-size: 14px;
+} */
+#container {
   max-width: 1140px;
   margin: auto;
   font-family: "Work Sans";
@@ -365,4 +371,16 @@ footer nav ul {
   margin-top: 10px;
   color: black;
   text-decoration: underline;
+}
+
+/* page édition*/
+body .border-admin {
+  color: white;
+  background-color: black;
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  font-family: "Syne";
+  font-size: 16px;
+  font-weight: 400;
 }
