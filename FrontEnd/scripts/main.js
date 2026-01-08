@@ -1,4 +1,4 @@
-async function fetchWorks() {
+async function afficherGaleries() {
   const response = await fetch("http://localhost:5678/api/works");
   const works = await response.json();
   console.log(works);
@@ -39,7 +39,7 @@ function filtrerParCategorie(categorieId) {
   });
 }
 
-async function fetchtries() {
+async function afficherLesCategories() {
   const categoriesResponse = await fetch(
     "http://localhost:5678/api/categories"
   );
@@ -52,7 +52,7 @@ async function fetchtries() {
   filterTous.classList.add("choixGallery");
   filterTous.addEventListener("click", function () {
     filtrerParCategorie("tous");
-    supprimeClass();
+    supprimerLesClass();
     filterTous.classList.add("choixGallery");
   });
   const filtreBouton = document.querySelector(".filtres");
@@ -67,7 +67,7 @@ async function fetchtries() {
     boutonElement.addEventListener("click", function () {
       console.log(categorie.id);
       filtrerParCategorie(categorie.id);
-      supprimeClass();
+      supprimerLesClass();
       boutonElement.classList.add("choixGallery");
     });
 
@@ -75,7 +75,7 @@ async function fetchtries() {
   }
 }
 
-function supprimeClass() {
+function supprimerLesClass() {
   const classButtons = document.querySelectorAll("button");
   classButtons.forEach((button) => {
     button.classList.remove("choixGallery");
@@ -83,5 +83,5 @@ function supprimeClass() {
 }
 
 // Exécuter les fonctions
-fetchWorks();
-fetchtries();
+afficherGaleries();
+afficherLesCategories();

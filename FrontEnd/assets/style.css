@@ -127,13 +127,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-/** end reset css**/
-/* body {
-  max-width: 1140px;
-  margin: auto;
-  font-family: "Work Sans";
-  font-size: 14px;
-} */
+
 #container {
   max-width: 1140px;
   margin: auto;
@@ -191,7 +185,10 @@ li:hover {
 }
 #introduction {
   display: flex;
+  flex-direction: row;
+  margin: 25px auto;
   align-items: center;
+  width: 90%;
 }
 #introduction figure {
   flex: 1;
@@ -215,6 +212,12 @@ li:hover {
   font-size: 14px;
   width: 404px;
 }
+#portfolio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
@@ -245,7 +248,7 @@ button.choixGallery {
 }
 
 .gallery {
-  width: 100%;
+  width: 80%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 20px;
@@ -377,6 +380,7 @@ footer nav ul {
 body .border-admin {
   display: flex;
   justify-content: center;
+  gap: 10px;
   color: white;
   background-color: black;
   width: 100%;
@@ -389,4 +393,57 @@ body .border-admin {
   color: white;
   text-decoration: none;
   font-weight: 700;
+}
+#portfolio h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 .logo-modifier {
+  margin-left: 20px;
+  cursor: pointer;
+}
+.logo-modifier {
+  color: black;
+  text-decoration: none;
+  font-weight: 300;
+  font-size: 15px;
+}
+
+h2 button {
+  margin-left: 5px;
+  border-radius: 8px;
+  border: none;
+  color: black;
+  cursor: pointer;
+  background-color: white;
+}
+
+::backdrop {
+  background-color: gray;
+  opacity: 0.75;
+}
+.modale-admin {
+  width: 630px;
+  height: 690px;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  border-radius: 8px;
+}
+
+.titre-modale {
+  text-align: center;
+  margin: 25px 0;
+  font-family: "Work Sans";
+  font-weight: 400;
+  font-size: 26px;
+  color: black;
+}
+
+.croix-modale {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  cursor: pointer;
 }
