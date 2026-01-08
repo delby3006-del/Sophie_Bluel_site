@@ -375,12 +375,18 @@ footer nav ul {
 
 /* page édition*/
 body .border-admin {
+  display: flex;
+  justify-content: center;
   color: white;
   background-color: black;
   width: 100%;
   padding: 15px;
-  text-align: center;
   font-family: "Syne";
   font-size: 16px;
   font-weight: 400;
+}
+.logo-mode-edition {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
 }

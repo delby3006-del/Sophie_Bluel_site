@@ -22,9 +22,12 @@ if (valeurToken) {
 
 async function ajouterBordureAdmin() {
   const bordureAdmin = document.createElement("div");
+  const logoModeEdition = document.createElement("i");
+  logoModeEdition.className = "fa-regular fa-pen-to-square logo-mode-edition";
   const modeEdition = document.createElement("p");
   bordureAdmin.className = "border-admin";
   modeEdition.innerText = "Mode édition";
   document.querySelector("body").prepend(bordureAdmin);
+  document.querySelector(".border-admin").appendChild(logoModeEdition);
   document.querySelector(".border-admin").appendChild(modeEdition);
 }
