@@ -13,31 +13,25 @@ if (valeurToken) {
 
   document.querySelector("#logout").addEventListener("click", (e) => {
     e.preventDefault();
-
-    localStorage.removeItem("token"); // suppression du token
-    console.log("Token supprimé");
-
-    window.location.href = "./index.html"; // redirection
+    localStorage.removeItem("token");
+    window.location.href = "./index.html";
   });
-} else {
-  console.log("Utilisateur non connecté");
 }
 
 async function ajouterBordureAdmin() {
   const bordureAdmin = document.createElement("div");
   const logoModeEdition = document.createElement("i");
-  logoModeEdition.className = "fa-regular fa-pen-to-square logo-mode-edition";
   const modeEdition = document.createElement("p");
+  logoModeEdition.className = "fa-regular fa-pen-to-square logo-mode-edition";
   modeEdition.innerText = "Mode édition";
   bordureAdmin.className = "border-admin";
-  document.querySelector("body").prepend(bordureAdmin);
-  document.querySelector(".border-admin").appendChild(logoModeEdition);
-  document.querySelector(".border-admin").appendChild(modeEdition);
+  document.body.prepend(bordureAdmin);
+  bordureAdmin.append(logoModeEdition, modeEdition);
 }
 
 async function supprimerphotoModale(id) {
-  const response = await fetch("http://localhost:5678/api/works/" + id, {
-    method: "delete",
+  await fetch("http://localhost:5678/api/works/" + id, {
+    method: "DELETE",
     headers: {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
@@ -47,73 +41,101 @@ async function supprimerphotoModale(id) {
 async function afficherGaleriesModale() {
   const response = await fetch("http://localhost:5678/api/works");
   const works = await response.json();
-  console.log(works);
 
-  for (let i = 0; i < works.length; i++) {
-    const work = works[i];
+  for (let work of works) {
     const imageElement = document.createElement("img");
     imageElement.className = "photos-modale";
     imageElement.src = work.imageUrl;
 
     const figureElement = document.createElement("figure");
-    figureElement.className = "figureElement";
+    figureElement.className = "figure-element";
 
     const poubelle = document.createElement("button");
+    poubelle.type = "button";
     poubelle.className = "fa-solid fa-trash-can icone-poubelle";
-    poubelle.addEventListener("click", async () => {
+
+    poubelle.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       await supprimerphotoModale(work.id);
       figureElement.remove();
     });
+
     document.querySelector(".afficher-photo").appendChild(figureElement);
-    figureElement.appendChild(imageElement);
-    figureElement.appendChild(poubelle);
+    figureElement.append(imageElement, poubelle);
   }
 }
 
 async function créerModaleAdmin() {
   afficherGaleriesModale();
+
   const modaleAdmin = document.createElement("dialog");
+  const conteneurModale = document.createElement("div");
   const croixmodale = document.createElement("i");
   const titreModale = document.createElement("h2");
   const afficherphoto = document.createElement("div");
   const ajouterphoto = document.createElement("button");
-  titreModale.className = "titre-modale";
-  croixmodale.className = "fa-solid fa-xmark croix-modale";
+
   modaleAdmin.className = "modale-admin";
+  conteneurModale.className = "conteneur-modale";
+  croixmodale.className = "fa-solid fa-xmark croix-modale";
+  titreModale.className = "titre-modale";
   afficherphoto.className = "afficher-photo";
   ajouterphoto.className = "ajouter-photo";
+  ajouterphoto.type = "button";
+
   titreModale.innerText = "Galerie photo";
   ajouterphoto.innerText = "Ajouter une photo";
-  document.querySelector("body").prepend(modaleAdmin);
-  document.querySelector(".modale-admin").prepend(croixmodale);
-  document.querySelector(".modale-admin").prepend(titreModale);
-  document.querySelector(".modale-admin").appendChild(afficherphoto);
-  document.querySelector(".modale-admin").appendChild(ajouterphoto);
+
+  conteneurModale.addEventListener("click", (e) => e.stopPropagation());
+
+  modaleAdmin.addEventListener("click", () => fermerModale());
+
+  document.body.prepend(modaleAdmin);
+  modaleAdmin.prepend(conteneurModale);
+  conteneurModale.append(croixmodale, titreModale, afficherphoto, ajouterphoto);
+}
+
+function ouvrirModale() {
+  const modaleAdmin = document.querySelector(".modale-admin");
+  if (typeof modaleAdmin.showModal === "function") {
+    modaleAdmin.showModal();
+  } else {
+    modaleAdmin.style.display = "flex";
+  }
+}
+
+function fermerModale() {
+  const modaleAdmin = document.querySelector(".modale-admin");
+  if (typeof modaleAdmin.close === "function") {
+    modaleAdmin.close();
+  } else {
+    modaleAdmin.style.display = "none";
+  }
 }
 
 async function creerBoutonModificerProjetsAdmin() {
   document.getElementsByClassName("filtres")[0].style.display = "none";
   const logoModifier = document.createElement("i");
-  logoModifier.className = "fa-regular fa-pen-to-square logo-modifier";
   const boutonModifier = document.createElement("button");
+  logoModifier.className = "fa-regular fa-pen-to-square logo-modifier";
   boutonModifier.className = "bouton-modifier";
+  boutonModifier.type = "button";
   boutonModifier.innerText = "Modifier";
-  document.querySelector("#portfolio h2").appendChild(logoModifier);
-  document.querySelector("#portfolio h2").appendChild(boutonModifier);
+  document.querySelector("#portfolio h2").append(logoModifier, boutonModifier);
 }
+
 async function ouvrirModaleAdmin() {
-  const ouvrirmodale = document.querySelector(".bouton-modifier");
-  ouvrirmodale.addEventListener("click", () => {
-    console.log("ouvrir modale admin");
-    const modaleAdmin = document.querySelector(".modale-admin");
-    modaleAdmin.showModal();
+  document.querySelector(".bouton-modifier").addEventListener("click", () => {
+    ouvrirModale();
   });
 }
+
 async function fermerModaleAdmin() {
   const croixmodale = document.querySelector(".croix-modale");
-  croixmodale.addEventListener("click", () => {
-    console.log("fermer modale admin");
-    const modaleAdmin = document.querySelector(".modale-admin");
-    modaleAdmin.close();
+  croixmodale.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fermerModale();
   });
 }

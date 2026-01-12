@@ -427,12 +427,17 @@ h2 button {
 }
 .modale-admin {
   width: 570px;
-  height: 600px;
+  height: 650px;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   border-radius: 8px;
 }
 
+.conteneur-modale {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+}
 .titre-modale {
   text-align: center;
   margin: 25px 0;
@@ -466,12 +471,21 @@ h2 button {
 .modale-admin .afficher-photo {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
   gap: 15px;
-  width: 80%;
-  margin: 0 auto;
-  row-gap: 35px;
-}
-.modale-admin .afficher-photo img {
   width: 100%;
+  margin: 0 auto;
+}
+
+.modale-admin .afficher-photo .figure-element {
+  position: relative;
+}
+.modale-admin .afficher-photo .figure-element img {
+  width: 100%;
+}
+.modale-admin .afficher-photo .figure-element .icone-poubelle {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: black;
+  cursor: pointer;
 }
