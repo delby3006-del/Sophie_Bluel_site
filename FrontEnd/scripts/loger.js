@@ -58,7 +58,8 @@ async function afficherGaleriesModale() {
       e.preventDefault();
       e.stopPropagation();
       await supprimerphotoModale(work.id);
-      figureElement.remove();
+      figureElement.remove(); // modale
+      await rafraichirGaleriePrincipale(); // arrière-plan
     });
 
     document.querySelector(".afficher-photo").appendChild(figureElement);
@@ -138,4 +139,20 @@ async function fermerModaleAdmin() {
     e.stopPropagation();
     fermerModale();
   });
+}
+
+async function rafraichirGaleriePrincipale() {
+  const response = await fetch("http://localhost:5678/api/works");
+  const works = await response.json();
+
+  const galerie = document.querySelector(".gallery"); // à adapter
+  galerie.innerHTML = "";
+
+  for (let work of works) {
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    figure.appendChild(img);
+    galerie.appendChild(figure);
+  }
 }
