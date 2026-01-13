@@ -489,3 +489,100 @@ h2 button {
   color: black;
   cursor: pointer;
 }
+
+/* modale ajouter photos */
+.conteneur-modale-ajouter {
+  display: grid;
+  grid-auto-rows: auto;
+  /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
+  grid-template-columns: 80px 1fr 80px;
+  /* height: 100%; */
+  width: 100%;
+}
+.conteneur-modale-ajouter .titre-modale-ajouter {
+  grid-column-start: 2;
+  grid-row-start: 1;
+}
+
+.fleche-modale {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  cursor: pointer;
+}
+
+.titre-modale-ajouter {
+  text-align: center;
+  font-family: "Work Sans";
+  padding: 30px;
+  font-weight: 400;
+  font-size: 26px;
+  color: black;
+}
+
+.conteneur-modale-ajouter .contenu-modale-importer {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  align-items: center;
+}
+
+.contenu-modale-importer {
+  display: flex;
+  flex-direction: column;
+  background-color: #e8f1f6;
+}
+
+.logo-photo-ajouter {
+  font-size: 70px;
+  padding-top: 10%;
+  color: #b9c5cc;
+}
+
+.contenu-modale-importer .bouton-plus-ajouter-photo {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 40px;
+  margin-top: 10px;
+  font-family: "Syne";
+  font-size: 14px;
+  font-weight: 700;
+  color: #306685;
+  background-color: #b9c5cc;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+/* .contenu-modale-importer .bouton-plus-ajouter-photo {
+  display: block;
+  border: none;
+  border-radius: 25%;
+  padding: 10px 20px;
+  background-color: #b9c5cc;
+  margin: 20px auto;
+  font-family: "Syne";
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+} */
+
+.conteneur-modale-ajouter .valider-photo {
+  grid-column-start: 2;
+  grid-row-start: 5;
+}
+
+.valider-photo {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 50px;
+  margin-top: 75px;
+  font-family: "Syne";
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
