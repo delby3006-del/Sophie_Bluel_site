@@ -535,7 +535,7 @@ h2 button {
 
 .logo-photo-ajouter {
   font-size: 70px;
-  padding-top: 10%;
+  padding-top: 20px;
   color: #b9c5cc;
 }
 
@@ -553,19 +553,6 @@ h2 button {
   border-radius: 25px;
   cursor: pointer;
 }
-
-/* .contenu-modale-importer .bouton-plus-ajouter-photo {
-  display: block;
-  border: none;
-  border-radius: 25%;
-  padding: 10px 20px;
-  background-color: #b9c5cc;
-  margin: 20px auto;
-  font-family: "Syne";
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-} */
 
 .conteneur-modale-ajouter .valider-photo {
   grid-column-start: 2;

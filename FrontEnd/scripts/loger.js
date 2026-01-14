@@ -7,9 +7,7 @@ if (valeurToken) {
   etatLog.innerHTML = `<a href="#" id="logout">Logout</a>`;
   ajouterBordureAdmin();
   creerBoutonModificerProjetsAdmin();
-  créerModaleAdmin();
   ouvrirModaleAdmin();
-  fermerModaleAdmin();
 
   document.querySelector("#logout").addEventListener("click", (e) => {
     e.preventDefault();
@@ -95,9 +93,17 @@ async function créerModaleAdmin() {
   document.body.prepend(modaleAdmin);
   modaleAdmin.prepend(conteneurModale);
   conteneurModale.append(croixmodale, titreModale, afficherphoto, ajouterphoto);
+
+  croixmodale.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fermerModale();
+    console.log("fermer la modale");
+  });
 }
 
 function ouvrirModale() {
+  créerModaleAdmin();
   const modaleAdmin = document.querySelector(".modale-admin");
   if (typeof modaleAdmin.showModal === "function") {
     modaleAdmin.showModal();
@@ -109,7 +115,7 @@ function ouvrirModale() {
 function fermerModale() {
   const modaleAdmin = document.querySelector(".modale-admin");
   if (typeof modaleAdmin.close === "function") {
-    modaleAdmin.close();
+    modaleAdmin.remove();
   } else {
     modaleAdmin.style.display = "none";
   }
@@ -129,15 +135,6 @@ async function creerBoutonModificerProjetsAdmin() {
 async function ouvrirModaleAdmin() {
   document.querySelector(".bouton-modifier").addEventListener("click", () => {
     ouvrirModale();
-  });
-}
-
-async function fermerModaleAdmin() {
-  const croixmodale = document.querySelector(".croix-modale");
-  croixmodale.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    fermerModale();
   });
 }
 
@@ -167,6 +164,7 @@ async function ajouterphotoModale() {
   const contenuModaleImporter = document.createElement("div");
   const logoPhotoAjouter = document.createElement("i");
   const boutonPlusAjouterPhoto = document.createElement("button");
+  const commentaireAjouterPhoto = document.createElement("p");
   const boutonAjouterPhoto = document.createElement("input");
   const validerphotoAjouter = document.createElement("button");
   console.log("Ajouter une photo");
@@ -179,6 +177,7 @@ async function ajouterphotoModale() {
   titreModaleAjouter.className = "titre-modale-ajouter";
   contenuModaleImporter.className = "contenu-modale-importer";
   boutonPlusAjouterPhoto.className = "bouton-plus-ajouter-photo";
+  commentaireAjouterPhoto.className = "commentaire-ajouter-photo";
   validerphotoAjouter.className = "valider-photo";
   validerphotoAjouter.type = "button";
 
@@ -190,7 +189,7 @@ async function ajouterphotoModale() {
   boutonPlusAjouterPhoto.innerText = "+ Ajouter photo";
   titreModaleAjouter.innerText = "Ajout photo";
   validerphotoAjouter.innerText = "valider";
-
+  commentaireAjouterPhoto.innerText = "jpg, png : 4mo max";
   conteneurModaleAjouter.addEventListener("click", (e) => e.stopPropagation());
   croixmodaleAjouter.addEventListener("click", (e) => {
     e.preventDefault();
@@ -207,6 +206,12 @@ async function ajouterphotoModale() {
     e.stopPropagation();
     boutonAjouterPhoto.click();
   });
+  flechemodaleAjouter.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fermerModale();
+    ouvrirModale();
+  });
 
   document.querySelector(".modale-admin").prepend(conteneurModaleAjouter);
   conteneurModaleAjouter.append(
@@ -218,7 +223,8 @@ async function ajouterphotoModale() {
   contenuModaleImporter.append(
     logoPhotoAjouter,
     boutonAjouterPhoto,
-    boutonPlusAjouterPhoto
+    boutonPlusAjouterPhoto,
+    commentaireAjouterPhoto
   );
   conteneurModaleAjouter.append(validerphotoAjouter);
 }
