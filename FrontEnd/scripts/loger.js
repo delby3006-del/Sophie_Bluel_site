@@ -34,13 +34,13 @@ async function supprimerphotoModale(id) {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   });
+  const response = await fetch("http://localhost:5678/api/works");
+  doneesWorks = await response.json();
 }
 
-async function afficherGaleriesModale() {
-  const response = await fetch("http://localhost:5678/api/works");
-  const works = await response.json();
-
+async function afficherGaleriesModale(works) {
   for (let work of works) {
+    console.log(work);
     const imageElement = document.createElement("img");
     imageElement.className = "photos-modale";
     imageElement.src = work.imageUrl;
@@ -56,8 +56,8 @@ async function afficherGaleriesModale() {
       e.preventDefault();
       e.stopPropagation();
       await supprimerphotoModale(work.id);
-      figureElement.remove(); // modale
-      await rafraichirGaleriePrincipale(); // arrière-plan
+      figureElement.remove();
+      await rafraichirGaleriePrincipale();
     });
 
     document.querySelector(".afficher-photo").appendChild(figureElement);
@@ -65,9 +65,8 @@ async function afficherGaleriesModale() {
   }
 }
 
+let doneesWorks = null;
 async function créerModaleAdmin() {
-  afficherGaleriesModale();
-
   const modaleAdmin = document.createElement("dialog");
   const conteneurModale = document.createElement("div");
   const croixmodale = document.createElement("i");
@@ -100,6 +99,13 @@ async function créerModaleAdmin() {
     fermerModale();
     console.log("fermer la modale");
   });
+
+  if (doneesWorks === null) {
+    const response = await fetch("http://localhost:5678/api/works");
+    doneesWorks = await response.json();
+  }
+  console.log(doneesWorks);
+  afficherGaleriesModale(doneesWorks);
 }
 
 function ouvrirModale() {
@@ -142,7 +148,7 @@ async function rafraichirGaleriePrincipale() {
   const response = await fetch("http://localhost:5678/api/works");
   const works = await response.json();
 
-  const galerie = document.querySelector(".gallery"); // à adapter
+  const galerie = document.querySelector(".gallery");
   galerie.innerHTML = "";
 
   for (let work of works) {
@@ -166,6 +172,11 @@ async function ajouterphotoModale() {
   const boutonPlusAjouterPhoto = document.createElement("button");
   const commentaireAjouterPhoto = document.createElement("p");
   const boutonAjouterPhoto = document.createElement("input");
+  const blocInformationAjouterPhoto = document.createElement("div");
+  const titrePhotoAjouter = document.createElement("h3");
+  const nomTitrePhotoAjouter = document.createElement("input");
+  const categoriePhotoAjouter = document.createElement("h3");
+  const selecteurCategoriePhotoAjouter = document.createElement("select");
   const validerphotoAjouter = document.createElement("button");
   console.log("Ajouter une photo");
 
@@ -178,6 +189,13 @@ async function ajouterphotoModale() {
   contenuModaleImporter.className = "contenu-modale-importer";
   boutonPlusAjouterPhoto.className = "bouton-plus-ajouter-photo";
   commentaireAjouterPhoto.className = "commentaire-ajouter-photo";
+  blocInformationAjouterPhoto.className = "bloc-information-ajouter-photo";
+  titrePhotoAjouter.className = "titre-photo-ajouter";
+  nomTitrePhotoAjouter.className = "nom-titre-photo-ajouter";
+  nomTitrePhotoAjouter.type = "text";
+  categoriePhotoAjouter.className = "categorie-photo-ajouter";
+  selecteurCategoriePhotoAjouter.className =
+    "selecteur-categorie-photo-ajouter";
   validerphotoAjouter.className = "valider-photo";
   validerphotoAjouter.type = "button";
 
@@ -188,6 +206,8 @@ async function ajouterphotoModale() {
 
   boutonPlusAjouterPhoto.innerText = "+ Ajouter photo";
   titreModaleAjouter.innerText = "Ajout photo";
+  titrePhotoAjouter.innerText = "Titre";
+  categoriePhotoAjouter.innerText = "Catégorie";
   validerphotoAjouter.innerText = "valider";
   commentaireAjouterPhoto.innerText = "jpg, png : 4mo max";
   conteneurModaleAjouter.addEventListener("click", (e) => e.stopPropagation());
@@ -218,13 +238,21 @@ async function ajouterphotoModale() {
     croixmodaleAjouter,
     flechemodaleAjouter,
     titreModaleAjouter,
-    contenuModaleImporter
+    contenuModaleImporter,
+    blocInformationAjouterPhoto
   );
   contenuModaleImporter.append(
     logoPhotoAjouter,
     boutonAjouterPhoto,
     boutonPlusAjouterPhoto,
     commentaireAjouterPhoto
+  );
+  conteneurModaleAjouter.append(blocInformationAjouterPhoto);
+  blocInformationAjouterPhoto.append(
+    titrePhotoAjouter,
+    nomTitrePhotoAjouter,
+    categoriePhotoAjouter,
+    selecteurCategoriePhotoAjouter
   );
   conteneurModaleAjouter.append(validerphotoAjouter);
 }
