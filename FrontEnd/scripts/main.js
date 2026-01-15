@@ -39,13 +39,16 @@ function filtrerParCategorie(categorieId) {
   });
 }
 
-async function afficherLesCategories() {
+async function rechercherNomCategorie() {
   const categoriesResponse = await fetch(
     "http://localhost:5678/api/categories"
   );
   const categories = await categoriesResponse.json();
   console.log(categories);
+  return categories;
+}
 
+async function afficherLesCategories() {
   // Bouton "Tous"
   const filterTous = document.createElement("button");
   filterTous.innerText = "Tous";
@@ -59,6 +62,7 @@ async function afficherLesCategories() {
   filtreBouton.appendChild(filterTous);
 
   // Boutons pour chaque catégorie
+  const categories = await rechercherNomCategorie();
   for (let i = 0; i < categories.length; i++) {
     const categorie = categories[i];
     const boutonElement = document.createElement("button");
