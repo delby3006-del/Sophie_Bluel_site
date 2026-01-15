@@ -38,6 +38,17 @@ async function supprimerphotoModale(id) {
   doneesWorks = await response.json();
 }
 
+async function pouserPhotoModale(id) {
+  await fetch("http://localhost:5678/api/works/" + id, {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+  const response = await fetch("http://localhost:5678/api/works");
+  doneesWorks = await response.json();
+}
+
 async function afficherGaleriesModale(works) {
   for (let work of works) {
     console.log(work);
@@ -160,6 +171,22 @@ async function rafraichirGaleriePrincipale() {
   }
 }
 
+async function rafraichirGalerieModaleSuiteAjouter() {
+  const response = await fetch("http://localhost:5678/api/works");
+  const works = await response.json();
+
+  const galerie = document.querySelector(".gallery");
+  galerie.innerHTML = "";
+
+  for (let work of works) {
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    figure.appendChild(img);
+    galerie.appendChild(figure);
+  }
+}
+
 async function initialiserCategories() {
   const selecteurCategoriePhotoAjouter = document.querySelector(
     ".selecteur-categorie-photo-ajouter"
@@ -194,6 +221,29 @@ function previewimage(e) {
     preview.style.display = "block";
   };
   reader.readAsDataURL(file);
+}
+
+async function validerAjoutPhoto() {
+  const nomTitrePhotoAjouter = document.getElementsByClassName(
+    "nom-titre-photo-ajouter"
+  )[0];
+  const selecteurCategoriePhotoAjouter = document.getElementsByClassName(
+    "selecteur-categorie-photo-ajouter"
+  )[0];
+  const fichier = document.getElementById("ajout-photo-input").files[0];
+  const titre = nomTitrePhotoAjouter.value;
+  const categorie = selecteurCategoriePhotoAjouter.value;
+  const formData = new FormData();
+  formData.append("image", fichier);
+  formData.append("title", titre);
+  formData.append("category", categorie);
+  await fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+    body: formData,
+  });
 }
 
 function cacherLogoBoutonAjouterPhoto() {
@@ -286,12 +336,14 @@ async function ajouterphotoModale() {
     initialiserCategories();
   });
 
-  flechemodaleAjouter.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    fermerModale();
-    ouvrirModale();
-  });
+  // flechemodaleAjouter.addEventListener("click", (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   fermerModale();
+  //   ouvrirModale();
+  //   // afficherGaleriesModale(doneesWorks);
+  //   rafraichirGalerieModaleSuiteAjouter();
+  // });
 
   boutonAjouterPhoto.addEventListener("change", (e) => {
     previewimage(e);
@@ -301,22 +353,29 @@ async function ajouterphotoModale() {
   validerphotoAjouter.addEventListener("click", async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const fichier = document.getElementById("ajout-photo-input").files[0];
-    const titre = nomTitrePhotoAjouter.value;
-    const categorie = selecteurCategoriePhotoAjouter.value;
-    const formData = new FormData();
-    formData.append("image", fichier);
-    formData.append("title", titre);
-    formData.append("category", categorie);
-    await fetch("http://localhost:5678/api/works", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-      body: formData,
-    });
+    validerAjoutPhoto();
     await rafraichirGaleriePrincipale();
+    await rafraichirGalerieModaleSuiteAjouter();
+
+    nomTitrePhotoAjouter.value = "";
+    selecteurCategoriePhotoAjouter.selectedIndex = 0;
+    boutonAjouterPhoto.value = "";
+    imgAjouterPreview.src = "";
+    imgAjouterPreview.style.display = "none";
+
+    logoPhotoAjouter.style.display = "block";
+    boutonPlusAjouterPhoto.style.display = "block";
+    commentaireAjouterPhoto.style.display = "block";
+  });
+
+  flechemodaleAjouter.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     fermerModale();
+    ouvrirModale();
+    pouserPhotoModale(work.id);
+    afficherGaleriesModale();
+    rafraichirGalerieModaleSuiteAjouter();
   });
 
   document.querySelector(".modale-admin").prepend(conteneurModaleAjouter);
