@@ -38,13 +38,7 @@ async function supprimerphotoModale(id) {
   doneesWorks = await response.json();
 }
 
-async function pouserPhotoModale(id) {
-  await fetch("http://localhost:5678/api/works/" + id, {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-  });
+async function pouserPhotoModale() {
   const response = await fetch("http://localhost:5678/api/works");
   doneesWorks = await response.json();
 }
@@ -69,6 +63,32 @@ async function afficherGaleriesModale(works) {
       await supprimerphotoModale(work.id);
       figureElement.remove();
       await rafraichirGaleriePrincipale();
+    });
+
+    document.querySelector(".afficher-photo").appendChild(figureElement);
+    figureElement.append(imageElement, poubelle);
+  }
+}
+
+async function afficherGaleriesModalesuitAjout(works) {
+  const conteneur = document.querySelector(".afficher-photo");
+  conteneur.innerHTML = "";
+  for (let work of works) {
+    console.log(work);
+    const imageElement = document.createElement("img");
+    imageElement.className = "photos-modale";
+    imageElement.src = work.imageUrl;
+
+    const figureElement = document.createElement("figure");
+    figureElement.className = "figure-element";
+
+    const poubelle = document.createElement("button");
+    poubelle.type = "button";
+    poubelle.className = "fa-solid fa-trash-can icone-poubelle";
+
+    poubelle.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
     });
 
     document.querySelector(".afficher-photo").appendChild(figureElement);
@@ -336,15 +356,6 @@ async function ajouterphotoModale() {
     initialiserCategories();
   });
 
-  // flechemodaleAjouter.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   fermerModale();
-  //   ouvrirModale();
-  //   // afficherGaleriesModale(doneesWorks);
-  //   rafraichirGalerieModaleSuiteAjouter();
-  // });
-
   boutonAjouterPhoto.addEventListener("change", (e) => {
     previewimage(e);
     cacherLogoBoutonAjouterPhoto();
@@ -373,9 +384,11 @@ async function ajouterphotoModale() {
     e.stopPropagation();
     fermerModale();
     ouvrirModale();
-    pouserPhotoModale(work.id);
-    afficherGaleriesModale();
-    rafraichirGalerieModaleSuiteAjouter();
+    pouserPhotoModale().then(() => {
+      afficherGaleriesModalesuitAjout(doneesWorks);
+    });
+
+    // rafraichirGalerieModaleSuiteAjouter();
   });
 
   document.querySelector(".modale-admin").prepend(conteneurModaleAjouter);
