@@ -89,6 +89,9 @@ async function afficherGaleriesModalesuitAjout(works) {
     poubelle.addEventListener("click", async (e) => {
       e.preventDefault();
       e.stopPropagation();
+      await supprimerphotoModale(work.id);
+      figureElement.remove();
+      await rafraichirGaleriePrincipale();
     });
 
     document.querySelector(".afficher-photo").appendChild(figureElement);
@@ -97,6 +100,7 @@ async function afficherGaleriesModalesuitAjout(works) {
 }
 
 let doneesWorks = null;
+
 async function créerModaleAdmin() {
   const modaleAdmin = document.createElement("dialog");
   const conteneurModale = document.createElement("div");
@@ -209,8 +213,9 @@ async function rafraichirGalerieModaleSuiteAjouter() {
 
 async function initialiserCategories() {
   const selecteurCategoriePhotoAjouter = document.querySelector(
-    ".selecteur-categorie-photo-ajouter"
+    ".selecteur-categorie-photo-ajouter",
   );
+
   let categoriesChargees = false;
   selecteurCategoriePhotoAjouter.addEventListener("click", async () => {
     if (categoriesChargees) {
@@ -218,14 +223,23 @@ async function initialiserCategories() {
     }
     const categoriesImporter = await rechercherNomCategorie();
     selecteurCategoriePhotoAjouter.innerHTML = "";
+
+    const optionzero = document.createElement("option");
+    optionzero.value = "";
+    optionzero.innerText = "";
+    selecteurCategoriePhotoAjouter.append(optionzero);
+
     for (let i = 0; i < categoriesImporter.length; i++) {
       console.log(categoriesImporter[i].name);
       console.log(categoriesImporter[i]);
+
       const optionElement = document.createElement("option");
+
       optionElement.value = categoriesImporter[i].id;
       optionElement.innerText = categoriesImporter[i].name;
       selecteurCategoriePhotoAjouter.appendChild(optionElement);
     }
+
     categoriesChargees = true;
   });
 }
@@ -244,19 +258,27 @@ function previewimage(e) {
 }
 
 async function validerAjoutPhoto() {
-  const nomTitrePhotoAjouter = document.getElementsByClassName(
-    "nom-titre-photo-ajouter"
-  )[0];
-  const selecteurCategoriePhotoAjouter = document.getElementsByClassName(
-    "selecteur-categorie-photo-ajouter"
-  )[0];
-  const fichier = document.getElementById("ajout-photo-input").files[0];
-  const titre = nomTitrePhotoAjouter.value;
+  const nomTitrePhotoAjouter = document.querySelector(
+    ".nom-titre-photo-ajouter",
+  );
+  const selecteurCategoriePhotoAjouter = document.querySelector(
+    ".selecteur-categorie-photo-ajouter",
+  );
+  const fichier = document.getElementById("ajout-photo-input")?.files[0];
+
+  if (!nomTitrePhotoAjouter || !selecteurCategoriePhotoAjouter || !fichier) {
+    alert("Tous les champs doivent être remplis !");
+    return;
+  }
+
+  const titre = nomTitrePhotoAjouter.value.trim();
   const categorie = selecteurCategoriePhotoAjouter.value;
+
   const formData = new FormData();
   formData.append("image", fichier);
   formData.append("title", titre);
   formData.append("category", categorie);
+
   await fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
@@ -266,13 +288,38 @@ async function validerAjoutPhoto() {
   });
 }
 
+function controleurPhotoImporter() {
+  const fichier = document.getElementById("ajout-photo-input")?.files[0];
+  const nomTitrePhotoAjouter = document.querySelector(
+    ".nom-titre-photo-ajouter",
+  );
+  const selecteurCategoriePhotoAjouter = document.querySelector(
+    ".selecteur-categorie-photo-ajouter",
+  );
+
+  if (!nomTitrePhotoAjouter || !selecteurCategoriePhotoAjouter) {
+    console.error("Certains champs sont introuvables dans le DOM !");
+    return false;
+  }
+
+  const nomPhoto = nomTitrePhotoAjouter.value.trim();
+  const categoriePhoto = selecteurCategoriePhotoAjouter.value;
+
+  if (!fichier || !nomPhoto || !categoriePhoto) {
+    // alert("Tous les champs doivent être remplis.");
+    return false;
+  }
+
+  return true;
+}
+
 function cacherLogoBoutonAjouterPhoto() {
   const logoPhotoAjouter = document.querySelector(".logo-photo-ajouter");
   const boutonPlusAjouterPhoto = document.querySelector(
-    ".bouton-plus-ajouter-photo"
+    ".bouton-plus-ajouter-photo",
   );
   const commentaireAjouterPhoto = document.querySelector(
-    ".commentaire-ajouter-photo"
+    ".commentaire-ajouter-photo",
   );
   commentaireAjouterPhoto.style.display = "none";
   logoPhotoAjouter.style.display = "none";
@@ -361,15 +408,25 @@ async function ajouterphotoModale() {
     cacherLogoBoutonAjouterPhoto();
   });
 
+  titrePhotoAjouter.addEventListener("change", (e) => {
+    controleurPhotoImporter();
+  });
+
+  selecteurCategoriePhotoAjouter.addEventListener("change", (e) => {
+    controleurPhotoImporter();
+    validerphotoAjouter.style.backgroundColor = "#1d6154";
+  });
+
   validerphotoAjouter.addEventListener("click", async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    controleurPhotoImporter();
     validerAjoutPhoto();
     await rafraichirGaleriePrincipale();
     await rafraichirGalerieModaleSuiteAjouter();
 
     nomTitrePhotoAjouter.value = "";
-    selecteurCategoriePhotoAjouter.selectedIndex = 0;
+    selecteurCategoriePhotoAjouter.innerHTML = "";
     boutonAjouterPhoto.value = "";
     imgAjouterPreview.src = "";
     imgAjouterPreview.style.display = "none";
@@ -387,8 +444,6 @@ async function ajouterphotoModale() {
     pouserPhotoModale().then(() => {
       afficherGaleriesModalesuitAjout(doneesWorks);
     });
-
-    // rafraichirGalerieModaleSuiteAjouter();
   });
 
   document.querySelector(".modale-admin").prepend(conteneurModaleAjouter);
@@ -397,7 +452,7 @@ async function ajouterphotoModale() {
     flechemodaleAjouter,
     titreModaleAjouter,
     contenuModaleImporter,
-    blocInformationAjouterPhoto
+    blocInformationAjouterPhoto,
   );
 
   contenuModaleImporter.append(
@@ -405,14 +460,14 @@ async function ajouterphotoModale() {
     boutonAjouterPhoto,
     boutonPlusAjouterPhoto,
     commentaireAjouterPhoto,
-    imgAjouterPreview
+    imgAjouterPreview,
   );
 
   blocInformationAjouterPhoto.append(
     titrePhotoAjouter,
     nomTitrePhotoAjouter,
     categoriePhotoAjouter,
-    selecteurCategoriePhotoAjouter
+    selecteurCategoriePhotoAjouter,
   );
 
   conteneurModaleAjouter.append(validerphotoAjouter);
