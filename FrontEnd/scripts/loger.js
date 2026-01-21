@@ -413,8 +413,11 @@ async function ajouterphotoModale() {
   });
 
   selecteurCategoriePhotoAjouter.addEventListener("change", (e) => {
-    controleurPhotoImporter();
-    validerphotoAjouter.style.backgroundColor = "#1d6154";
+    if (controleurPhotoImporter()) {
+      validerphotoAjouter.style.backgroundColor = "#1d6154";
+    } else {
+      validerphotoAjouter.style.backgroundColor = "";
+    }
   });
 
   validerphotoAjouter.addEventListener("click", async (e) => {
