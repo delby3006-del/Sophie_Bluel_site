@@ -1,5 +1,5 @@
 const valeurToken = localStorage.getItem("token");
-console.log("token :", valeurToken);
+// console.log("token :", valeurToken);
 
 const etatLog = document.querySelector(".etat-log");
 
@@ -45,7 +45,7 @@ async function pouserPhotoModale() {
 
 async function afficherGaleriesModale(works) {
   for (let work of works) {
-    console.log(work);
+    // console.log(work);
     const imageElement = document.createElement("img");
     imageElement.className = "photos-modale";
     imageElement.src = work.imageUrl;
@@ -74,7 +74,7 @@ async function afficherGaleriesModalesuitAjout(works) {
   const conteneur = document.querySelector(".afficher-photo");
   conteneur.innerHTML = "";
   for (let work of works) {
-    console.log(work);
+    // console.log(work);
     const imageElement = document.createElement("img");
     imageElement.className = "photos-modale";
     imageElement.src = work.imageUrl;
@@ -132,14 +132,14 @@ async function créerModaleAdmin() {
     e.preventDefault();
     e.stopPropagation();
     fermerModale();
-    console.log("fermer la modale");
+    // console.log("fermer la modale");
   });
 
   if (doneesWorks === null) {
     const response = await fetch("http://localhost:5678/api/works");
     doneesWorks = await response.json();
   }
-  console.log(doneesWorks);
+  // console.log(doneesWorks);
   afficherGaleriesModale(doneesWorks);
 }
 
@@ -230,8 +230,8 @@ async function initialiserCategories() {
     selecteurCategoriePhotoAjouter.append(optionzero);
 
     for (let i = 0; i < categoriesImporter.length; i++) {
-      console.log(categoriesImporter[i].name);
-      console.log(categoriesImporter[i]);
+      // console.log(categoriesImporter[i].name);
+      // console.log(categoriesImporter[i]);
 
       const optionElement = document.createElement("option");
 
@@ -306,7 +306,7 @@ function controleurPhotoImporter() {
   const categoriePhoto = selecteurCategoriePhotoAjouter.value;
 
   if (!fichier || !nomPhoto || !categoriePhoto) {
-    // alert("Tous les champs doivent être remplis.");
+    alert("Tous les champs doivent être remplis.");
     return false;
   }
 

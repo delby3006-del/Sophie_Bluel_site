@@ -9,20 +9,16 @@ async function connectionHomepage() {
       body: JSON.stringify({ email, password }),
     });
 
-    // Si identifiants faux → OC attend souvent 401
     if (!response.ok) {
-      // Affiche un message d’erreur
-      console.log("Login échoué :", response.status);
+      // console.log("Login échoué :", response.status);
       alert("Erreur dans l’identifiant ou le mot de passe");
       return;
     }
 
-    const data = await response.json(); // { token: "..." }
+    const data = await response.json();
 
-    // Stocker le token reconnue ensuite
     localStorage.setItem("token", data.token);
 
-    // Rediriger vers la page d’accueil (index)
     window.location.href = "./index.html";
   } catch (err) {
     console.error("Erreur réseau :", err);
@@ -30,7 +26,6 @@ async function connectionHomepage() {
   }
 }
 
-// Exécuter les fonctions
 document.getElementById("formulaire").addEventListener("submit", (e) => {
   e.preventDefault();
   connectionHomepage();
