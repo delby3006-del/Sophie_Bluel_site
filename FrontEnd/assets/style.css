@@ -430,11 +430,12 @@ h2 button {
 }
 
 /* gestion de la modale */
-::backdrop {
+dialog.modale-admin::backdrop {
   background-color: gray;
   opacity: 0.75;
 }
-.modale-admin {
+.modale-admin,
+.modale-root {
   width: 570px;
   height: 650px;
   border: none;
@@ -644,4 +645,27 @@ h2 button {
   display: none;
   width: auto;
   max-height: 100%;
+}
+
+/* --- FIX MODALE : empêche la fermeture involontaire --- */
+.modale-admin {
+  position: relative;
+  z-index: 10;
+}
+
+.conteneur-modale,
+.conteneur-modale-ajouter {
+  position: relative;
+  z-index: 20;
+}
+
+.croix-modale,
+.fleche-modale,
+.icone-poubelle {
+  position: absolute;
+  z-index: 30;
+}
+
+.modale-admin * {
+  pointer-events: auto;
 }

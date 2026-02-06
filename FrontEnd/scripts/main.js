@@ -3,7 +3,6 @@ async function afficherGaleries() {
   const works = await response.json();
   console.log(works);
 
-  // création des elements du DOM
   for (let i = 0; i < works.length; i++) {
     const work = works[i];
     const figureElement = document.createElement("figure");
@@ -13,6 +12,8 @@ async function afficherGaleries() {
     const figcaptionElement = document.createElement("figcaption");
     figcaptionElement.innerText = work.title;
 
+    console.log(work.imageUrl);
+
     const workGallery = document.querySelector(".gallery");
     workGallery.appendChild(figureElement);
     figureElement.appendChild(imageElement);
@@ -20,16 +21,13 @@ async function afficherGaleries() {
   }
 }
 
-// Fonction pour filtrer les travaux par catégorie
 function filtrerParCategorie(categorieId) {
   const figures = document.querySelectorAll(".gallery figure");
 
   figures.forEach((figure) => {
     if (categorieId === "tous") {
-      // Afficher tous les éléments
       figure.style.display = "block";
     } else {
-      // Afficher uniquement ceux qui correspondent à la catégorie
       if (figure.dataset.categorieId === categorieId.toString()) {
         figure.style.display = "block";
       } else {
@@ -41,7 +39,7 @@ function filtrerParCategorie(categorieId) {
 
 async function rechercherNomCategorie() {
   const categoriesResponse = await fetch(
-    "http://localhost:5678/api/categories"
+    "http://localhost:5678/api/categories",
   );
   const categories = await categoriesResponse.json();
   console.log(categories);
@@ -49,7 +47,6 @@ async function rechercherNomCategorie() {
 }
 
 async function afficherLesCategories() {
-  // Bouton "Tous"
   const filterTous = document.createElement("button");
   filterTous.innerText = "Tous";
   filterTous.classList.add("choixGallery");
@@ -61,7 +58,6 @@ async function afficherLesCategories() {
   const filtreBouton = document.querySelector(".filtres");
   filtreBouton.appendChild(filterTous);
 
-  // Boutons pour chaque catégorie
   const categories = await rechercherNomCategorie();
   for (let i = 0; i < categories.length; i++) {
     const categorie = categories[i];
